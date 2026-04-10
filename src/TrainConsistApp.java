@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 class Bogie {
     private String name;
@@ -25,22 +26,28 @@ class Bogie {
     }
 }
 
-public class TrainConsistentManagementApp {
+public class TrainConsistApp {
     public static void main(String[] args) {
 
 
         List<Bogie> bogieList = new ArrayList<>();
-
-
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 56));
         bogieList.add(new Bogie("First Class", 24));
 
 
-        bogieList.sort(Comparator.comparingInt(Bogie::getCapacity));
+        List<Bogie> filteredBogies = bogieList.stream()
+                .filter(b -> b.getCapacity() > 60)
+                .collect(Collectors.toList());
 
 
-        System.out.println("Bogies Sorted by Capacity (Ascending):");
+        System.out.println("Filtered Bogies (Capacity > 60):");
+        for (Bogie b : filteredBogies) {
+            b.display();
+        }
+
+
+        System.out.println("\nOriginal Bogie List:");
         for (Bogie b : bogieList) {
             b.display();
         }
